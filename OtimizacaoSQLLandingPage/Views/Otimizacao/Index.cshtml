@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Otimização de Consultas PL/SQL com IA";
+}
+
+<header>
+    <h1>Otimização de Consultas PL/SQL com IA</h1>
+</header>
+
+<section id="intro">
+    <p>Melhore o desempenho de suas consultas PL/SQL com nossa ferramenta de otimização baseada em IA.</p>
+</section>
+
+<section id="demo">
+    <h2>Demonstração Interativa</h2>
+    <textarea id="consultaInput" rows="4" cols="50" placeholder="Insira sua consulta PL/SQL aqui"></textarea>
+    <button id="analisarBtn">Analisar Consulta</button>
+    <div id="resultado" style="display:none;">
+        <h3>Sugestões de Otimização:</h3>
+        <ul id="sugestoes"></ul>
+        <h3>Comparação de Desempenho:</h3>
+        <div id="desempenho"></div>
+    </div>
+</section>
+
+<section id="beneficios">
+    <h2>Benefícios</h2>
+    <ul>
+        <li>Melhoria significativa no desempenho das consultas</li>
+        <li>Análise automatizada e sugestões inteligentes</li>
+        <li>Economia de tempo para desenvolvedores</li>
+        <li>Integração fácil com sistemas existentes</li>
+    </ul>
+</section>
+
+<section id="cta">
+    <h2>Comece a otimizar suas consultas hoje!</h2>
+    <button>Solicitar Demo</button>
+</section>
+
+<footer>
+    <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
+</footer>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#analisarBtn').click(function () {
+                var consulta = $('#consultaInput').val();
+                $.post('@Url.Action("AnalisarConsulta", "Otimizacao")', { consulta: consulta }, function (data) {
+                    $('#sugestoes').empty();
+                    $.each(data.Sugestoes, function (i, sugestao) {
+                        $('#sugestoes').append($('<li>').text(sugestao));
+                    });
+                    $('#desempenho').html('Tempo Original: ' + data.TempoOriginal + '<br>Tempo Otimizado: ' + data.TempoOtimizado);
+                    $('#resultado').show();
+                });
+            });
+        });
+    </script>
+}
